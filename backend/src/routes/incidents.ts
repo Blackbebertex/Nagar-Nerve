@@ -49,7 +49,11 @@ router.post('/analyze', async (req: Request, res: Response) => {
       : ['No safe route found. All paths may be blocked.'];
 
     // Step 4: Gemini grounded response plan
-    const responsePlan = await generateResponsePlan(verifiedFacts, computedResults);
+    const allowedTargetIds = new Set([
+      ...blockedRoads.map((road: Road) => road.id),
+      ...availableResources.map((resource: Resource) => resource.id),
+    ]);
+    const responsePlan = await generateResponsePlan(verifiedFacts, computedResults, allowedTargetIds);
 
     return res.json({
       success: true,

@@ -25,7 +25,7 @@ const FALLBACK_PLAN: ResponsePlan = {
   actions: [
     { order: 1, action: 'avoid_road',        targetId: 'road-01',       reason: 'Road-01 is verified blocked due to flooding.' },
     { order: 2, action: 'contact_volunteer', targetId: 'volunteer-07',  reason: 'Volunteer-07 is verified, available, and near the pickup point.' },
-    { order: 3, action: 'use_route',         targetId: 'route-b',       reason: 'Alternative route avoids the blocked road and reaches the pharmacy safely.' },
+    { order: 3, action: 'coordinate_pickup', targetId: 'pharmacy-01',   reason: 'GreenCare Pharmacy is verified open and has the required medicine available.' },
   ],
   fallback: { type: 'clinic', targetId: 'clinic-01' },
   source: 'fallback',
@@ -97,7 +97,8 @@ Important: observations must be factual observations only. Do NOT include infere
 // ─── RESPONSE PLAN GENERATION ────────────────────────────────────────────────
 export async function generateResponsePlan(
   verifiedFacts: string[],
-  computedResults: string[]
+  computedResults: string[],
+  allowedTargetIds: Set<string>
 ): Promise<ResponsePlan> {
   try {
     const schema: Schema = {
@@ -153,6 +154,10 @@ ${computedResults.map((c, i) => `${i + 1}. ${c}`).join('\n')}`,
 
     if (!response.text) throw new Error('Empty Gemini response');
     const parsed = JSON.parse(response.text);
+    const targetIds = [...parsed.actions.map((action: ResponsePlan['actions'][number]) => action.targetId), parsed.fallback.targetId];
+    if (targetIds.some((targetId) => typeof targetId !== 'string' || !allowedTargetIds.has(targetId))) {
+      throw new Error('Gemini response referenced an unverified target ID');
+    }
     return { ...parsed, source: 'gemini' };
   } catch (err) {
     console.error('[GeminiService] generateResponsePlan failed, using fallback:', err);

@@ -12,6 +12,7 @@ const frontendOrigins = [
   'http://localhost:5173',
   'http://127.0.0.1:5173',
   'http://localhost',
+  'https://localhost',
   'capacitor://localhost',
 ].filter((origin): origin is string => Boolean(origin));
 

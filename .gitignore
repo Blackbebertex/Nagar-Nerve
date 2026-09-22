@@ -1,0 +1,14 @@
+.env
+**/.env
+!.env.example
+**/node_modules/
+**/dist/
+**/.gradle/
+frontend/android/.gradle/
+frontend/android/build/
+frontend/android/app/build/
+tools/
+agent/__pycache__/
+*.tsbuildinfo
+*.apk
+*.aab

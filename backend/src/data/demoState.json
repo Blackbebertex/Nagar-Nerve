@@ -1,0 +1,92 @@
+{
+  "nodes": [
+    { "id": "node-hall-a",       "name": "Community Hall A",       "coordinates": { "lat": 18.5204, "lng": 73.8567 } },
+    { "id": "node-hall-b",       "name": "Community Hall B",       "coordinates": { "lat": 18.5240, "lng": 73.8530 } },
+    { "id": "node-pharmacy-1",   "name": "GreenCare Pharmacy",     "coordinates": { "lat": 18.5228, "lng": 73.8592 } },
+    { "id": "node-clinic-1",     "name": "Central Clinic",         "coordinates": { "lat": 18.5235, "lng": 73.8610 } },
+    { "id": "node-resident",     "name": "Grandfather Residence",  "coordinates": { "lat": 18.5188, "lng": 73.8548 } },
+    { "id": "node-inter-1",      "name": "Intersection North",     "coordinates": { "lat": 18.5210, "lng": 73.8573 } },
+    { "id": "node-inter-2",      "name": "Intersection West",      "coordinates": { "lat": 18.5222, "lng": 73.8555 } },
+    { "id": "node-inter-3",      "name": "Intersection East",      "coordinates": { "lat": 18.5222, "lng": 73.8600 } }
+  ],
+  "roads": [
+    { "id": "road-01", "from": "node-hall-a",     "to": "node-inter-1",    "status": "blocked", "distance": 0.5,  "travelTime": 5  },
+    { "id": "road-02", "from": "node-inter-1",    "to": "node-pharmacy-1", "status": "open",    "distance": 0.7,  "travelTime": 4  },
+    { "id": "road-03", "from": "node-hall-a",     "to": "node-inter-2",    "status": "open",    "distance": 0.6,  "travelTime": 4  },
+    { "id": "road-04", "from": "node-inter-2",    "to": "node-pharmacy-1", "status": "open",    "distance": 0.9,  "travelTime": 5  },
+    { "id": "road-05", "from": "node-pharmacy-1", "to": "node-clinic-1",   "status": "open",    "distance": 0.5,  "travelTime": 3  },
+    { "id": "road-06", "from": "node-pharmacy-1", "to": "node-inter-3",    "status": "open",    "distance": 0.4,  "travelTime": 2  },
+    { "id": "road-07", "from": "node-inter-2",    "to": "node-inter-3",    "status": "open",    "distance": 0.9,  "travelTime": 4  },
+    { "id": "road-08", "from": "node-inter-3",    "to": "node-resident",   "status": "open",    "distance": 0.8,  "travelTime": 5  },
+    { "id": "road-09", "from": "node-hall-a",     "to": "node-resident",   "status": "open",    "distance": 0.4,  "travelTime": 2  },
+    { "id": "road-10", "from": "node-hall-b",     "to": "node-inter-2",    "status": "open",    "distance": 0.7,  "travelTime": 4  }
+  ],
+  "resources": [
+    {
+      "id": "pharmacy-01",
+      "type": "pharmacy",
+      "name": "GreenCare Pharmacy",
+      "coordinates": { "lat": 18.5228, "lng": 73.8592 },
+      "status": "open",
+      "verified": true,
+      "availability": { "medicine_available": true, "inventory": ["paracetamol", "insulin-demo", "blood-pressure-demo"] },
+      "synthetic": true,
+      "nodeId": "node-pharmacy-1"
+    },
+    {
+      "id": "clinic-01",
+      "type": "clinic",
+      "name": "Central Clinic",
+      "coordinates": { "lat": 18.5235, "lng": 73.8610 },
+      "status": "open",
+      "verified": true,
+      "availability": {},
+      "synthetic": true,
+      "nodeId": "node-clinic-1"
+    },
+    {
+      "id": "volunteer-07",
+      "type": "volunteer",
+      "name": "Volunteer-07",
+      "coordinates": { "lat": 18.5215, "lng": 73.8565 },
+      "status": "available",
+      "verified": true,
+      "availability": { "vehicle": "bicycle" },
+      "synthetic": true,
+      "nodeId": "node-inter-2"
+    },
+    {
+      "id": "volunteer-12",
+      "type": "volunteer",
+      "name": "Volunteer-12",
+      "coordinates": { "lat": 18.5230, "lng": 73.8540 },
+      "status": "unavailable",
+      "verified": true,
+      "availability": { "vehicle": "on-foot" },
+      "synthetic": true,
+      "nodeId": "node-hall-b"
+    },
+    {
+      "id": "hall-a",
+      "type": "community_hall",
+      "name": "Community Hall A",
+      "coordinates": { "lat": 18.5204, "lng": 73.8567 },
+      "status": "open",
+      "verified": true,
+      "availability": {},
+      "synthetic": true,
+      "nodeId": "node-hall-a"
+    },
+    {
+      "id": "hall-b",
+      "type": "community_hall",
+      "name": "Community Hall B",
+      "coordinates": { "lat": 18.5240, "lng": 73.8530 },
+      "status": "open",
+      "verified": true,
+      "availability": {},
+      "synthetic": true,
+      "nodeId": "node-hall-b"
+    }
+  ]
+}

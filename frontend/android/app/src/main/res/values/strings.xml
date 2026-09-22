@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Nagar Nerve</string>
+    <string name="title_activity_main">Nagar Nerve</string>
+    <string name="package_name">com.nagarnerve.app</string>
+    <string name="custom_url_scheme">com.nagarnerve.app</string>
+</resources>

@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc && node scripts/copy-data.cjs",
+    "test": "npm run build && node --test dist/services/routingService.test.js",
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts"
   },

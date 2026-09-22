@@ -22,7 +22,7 @@ app.use(cors({
       callback(null, true);
       return;
     }
-    callback(new Error('Origin is not allowed by CORS'));
+    callback(null, false);
   },
 }));
 app.use(express.json({ limit: '10mb' })); // allow image uploads
@@ -40,6 +40,11 @@ app.get('/api/health', (_req, res) => {
     geminiConfigured: Boolean(process.env.GEMINI_API_KEY),
     timestamp: new Date().toISOString(),
   });
+});
+
+app.use((err: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  console.error('Unhandled API error:', err);
+  res.status(500).json({ success: false, error: 'An unexpected server error occurred.' });
 });
 
 const PORT = Number(process.env.PORT ?? 3001);

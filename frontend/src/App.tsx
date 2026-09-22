@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { ShieldAlert, Wifi, WifiOff, Home, FilePlus2, Map, Activity, UserRound } from 'lucide-react';
 import type { Role, AnalyzeResponse, SimulationResult, NeighborhoodState } from './types';
 import { Header } from './components/Header';
@@ -15,21 +15,26 @@ export default function App() {
   const [neighborhoodState, setNeighborhoodState] = useState<NeighborhoodState | null>(null);
   const [incidentResult, setIncidentResult] = useState<AnalyzeResponse | null>(null);
   const [simulationResult, setSimulationResult] = useState<SimulationResult | null>(null);
+  const syncInFlight = useRef(false);
 
   // Check backend health on load
   useEffect(() => {
     let cancelled = false;
 
     const syncBackendState = async () => {
-      const online = await checkHealth();
-      if (cancelled) return;
-
-      setBackendOnline(online);
       try {
+        if (syncInFlight.current) return;
+        syncInFlight.current = true;
+        const online = await checkHealth();
+        if (cancelled) return;
+
+        setBackendOnline(online);
         const state = online ? await getNeighborhoodState() : await getDemoNeighborhoodState();
         if (!cancelled) setNeighborhoodState(state);
       } catch (error) {
         console.error(error);
+      } finally {
+        syncInFlight.current = false;
       }
     };
 

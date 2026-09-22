@@ -9,7 +9,7 @@ const router = Router();
 router.post('/road-closure', async (req: Request, res: Response) => {
   try {
     const { roadId } = req.body as { roadId: string };
-    if (!roadId) return res.status(400).json({ success: false, error: 'roadId is required' });
+    if (typeof roadId !== 'string' || !roadId.trim()) return res.status(400).json({ success: false, error: 'roadId is required' });
 
     const state = getState();
     const road = state.roads.find((r: Road) => r.id === roadId);
@@ -63,8 +63,9 @@ router.post('/road-closure', async (req: Request, res: Response) => {
       affectedResourceIds,
       explanation,
     });
-  } catch (err: any) {
-    return res.status(500).json({ success: false, error: err.message });
+  } catch (err) {
+    console.error('Road-closure simulation failed:', err);
+    return res.status(500).json({ success: false, error: 'Unable to run the simulation right now. Please try again.' });
   }
 });
 

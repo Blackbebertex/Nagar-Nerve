@@ -14,8 +14,12 @@ router.post('/analyze', async (req: Request, res: Response) => {
       imageBase64?: string;
     };
 
-    if (!text || !location) {
+    if (typeof text !== 'string' || typeof location !== 'string' || !text.trim() || !location.trim()) {
       return res.status(400).json({ success: false, error: 'text and location are required' });
+    }
+
+    if (imageBase64 !== undefined && typeof imageBase64 !== 'string') {
+      return res.status(400).json({ success: false, error: 'imageBase64 must be a base64 string when provided' });
     }
 
     // Step 1: Gemini multimodal analysis
@@ -55,8 +59,9 @@ router.post('/analyze', async (req: Request, res: Response) => {
       computedResults,
       responsePlan,
     });
-  } catch (err: any) {
-    return res.status(500).json({ success: false, error: err.message });
+  } catch (err) {
+    console.error('Incident analysis failed:', err);
+    return res.status(500).json({ success: false, error: 'Unable to analyze the incident right now. Please try again.' });
   }
 });
 
